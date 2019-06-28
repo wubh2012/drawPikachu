@@ -2,11 +2,6 @@ let log = console.log.bind(console)
 
 let css = `
 /**
- * 首先重置一下默认样式
-*/
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-/**
  * 准备好一块画布
 */
 
@@ -115,19 +110,17 @@ let css = `
   width: 24px;
   height: 10px;
   border: 2px solid black;
+  border-width: 0 0 2px 0px;
+  transform: translateX(-50%);
 }
 .mouth.left{
-  left: 117px;
-  border-width: 0 0 2px 0px;
+  left: 117px;  
   border-radius: 0 0 70% 100%;
-  transform: translateX(-50%);
   transform: rotate(-20deg);
 }
 .mouth.right{
-  right: 117px;
-  border-width: 0 0 2px 0px;
-  border-radius: 0 0 100% 70%;
-  transform: translateX(-50%);
+  right: 117px;  
+  border-radius: 0 0 100% 70%;  
   transform: rotate(20deg);
 }
 
@@ -144,7 +137,6 @@ let css = `
   background: brown;
   transform: rotate(-30deg);
   animation: moving1 2s ease infinite;
-  animation-delay: .8s;
 }
 /*
  * 再加点叶子
@@ -159,7 +151,6 @@ let css = `
   background: darkgreen;
   transform: rotate(-270deg);
   animation: moving2 2s ease infinite;
-  animation-delay: .5s;
 }
 .leaf2{
   position: absolute;
@@ -171,11 +162,12 @@ let css = `
   background: green;
   transform: rotate(-30deg);
   animation: moving3 2s ease infinite;
-  animation-delay: .3s;
 }
 /*
  * 再来点动画效果
  */
+.leafbranch,.leaf1,.leaf2{ animation-play-state: paused; }
+
 @keyframes moving1 {
   50%{
     top: 92px;
@@ -195,28 +187,49 @@ let css = `
   }
 }
 
+.leafbranch,.leaf1,.leaf2{ animation-play-state: running; }
+
+
 /*
- * 完成
+ * 大功告成 😀
  */
 `
-
+let duration = 50
 function writeCss(prefix, csscode, callback) {
   let cssElement = document.querySelector('#code')
   let mystyle = document.querySelector('#mystyle')
   let n = 0
-  let timerId = setInterval(() => {
+  let timerId = setTimeout( function run() {
     n += 1
     let temp = prefix + csscode.substring(0, n)
     cssElement.innerHTML = temp
     mystyle.innerHTML = temp
     cssElement.scrollTop = cssElement.scrollHeight
     if (n > csscode.length) {
-      clearInterval(timerId)
+      // clearTimeout(timerId)
       callback && callback.call()
+    }else{
+      timerId = setTimeout(run, duration);
     }
-  }, 1)
+  }, duration)
 }
-writeCss('', css, ()=>{
-  log('完成')
-})
+
+function bindEvent(){
+  let range = document.querySelector('#speed')
+  range.addEventListener('change', function(e){
+    let speed = e.target.value - 0
+    duration = 100 - speed
+    log('speed', duration)
+  })
+}
+function __main(){
+  writeCss('', css, ()=>{
+    log('完成')
+  })
+
+  bindEvent()
+
+}
+__main()
+
 
