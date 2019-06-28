@@ -143,7 +143,8 @@ let css = `
   height: 2px;
   background: brown;
   transform: rotate(-30deg);
-  animation: moving1 2s ease infinite
+  animation: moving1 2s ease infinite;
+  animation-delay: .8s;
 }
 /*
  * 再加点叶子
@@ -157,7 +158,8 @@ let css = `
   border-radius: 0 100% 0 100%;
   background: darkgreen;
   transform: rotate(-270deg);
-  animation: moving2 2s ease infinite
+  animation: moving2 2s ease infinite;
+  animation-delay: .5s;
 }
 .leaf2{
   position: absolute;
@@ -168,7 +170,8 @@ let css = `
   border-radius: 0 100% 0 100%;
   background: green;
   transform: rotate(-30deg);
-  animation: moving3 2s ease infinite
+  animation: moving3 2s ease infinite;
+  animation-delay: .3s;
 }
 /*
  * 再来点动画效果
@@ -179,7 +182,7 @@ let css = `
     transform: rotate(-20deg);
   }
 }
-@keyframes moving22{
+@keyframes moving2{
   50%{
     top: 95px;
     left: 83px;
